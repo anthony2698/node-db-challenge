@@ -1,14 +1,21 @@
-const db = require('../data/dbConfig.js')
+const db = require("../data/db-config");
 
 module.exports = {
-    addResource,
-    findResources
+	getResources,
+	getResourceByID,
+	createResource,
+};
+
+function getResources() {
+	return db("resources");
 }
 
-function findResources() {
-    return db('resources')
+function getResourceByID(id) {
+	return db("resources").where({ id });
 }
 
-function addResource(resource) {
-    return db('resources').insert(resource)
+function createResource(resource) {
+	return db("resources")
+		.insert(resource)
+		.then(([id]) => getResourceByID(id));
 }
